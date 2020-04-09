@@ -4,8 +4,28 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-
+import base64
+import random
+from douban.settings import PROXY_LIST
 from scrapy import signals
+
+
+#设置随机ip代理
+class RandomProxy(object):
+    def process_request(self,request,spider):
+        proxy = random.choice(PROXY_LIST)
+        print("目前使用的ip代理是:",proxy)
+        if 'user_passwd' in proxy:
+            #setting中的有密码的代理处理
+            b64_up = base64.b64encode(property["user_passwd"].encode())
+            request.headers['Proxy-Authorization'] = "Basic " + b64_up.decode()  #有空格,基于http认证的方式
+            #设置代理
+            request.meta['proxy'] = proxy['ip_port']
+        else:
+            #没有密码的处理方式设置代理
+            request.meta['proxy'] = proxy['ip_port']
+
+
 
 
 class DoubanSpiderMiddleware(object):

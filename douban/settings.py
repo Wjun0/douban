@@ -44,6 +44,16 @@ DEFAULT_REQUEST_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0"
 }
 
+
+#随机IP代理设置
+PROXY_LIST = [
+    # {"ip_port":"114.239.144.61:808"},
+    # {"ip_port":"117.88.177.28:3000"},
+    {"ip_port":"117.88.177.76:3000"},
+    {"ip_port":"116.114.19.211:443"},
+    #{"ip_port":"117.88.177.28:3000","user_passwd":"xxxxx"}  #专门的代理
+
+]
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
@@ -52,9 +62,11 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'douban.middlewares.DoubanDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   # 'douban.middlewares.DoubanDownloaderMiddleware': 543,
+   'douban.middlewares.RandomProxy': 543,
+
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
