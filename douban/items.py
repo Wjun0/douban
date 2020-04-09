@@ -15,7 +15,7 @@ class DoubanItem(scrapy.Item):
     url = scrapy.Field()        #电影url
     score = scrapy.Field()      #电影评分
     image_url = scrapy.Field()  #电影图片连接image
-    image = scrapy.Field()      #电影默认图片
     desc = scrapy.Field()       #描述/简介
+    ranking = scrapy.Field()    #排名
 
 
