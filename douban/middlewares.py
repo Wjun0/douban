@@ -13,7 +13,7 @@ from scrapy import signals
 #设置随机请求头
 class RandomUserAgent(object):
     def process_request(self,request,spider):
-        print(request.headers['User-Agent'])
+        # print(request.headers['User-Agent'])
         ua = random.choice(USER_AGENT_LIST)
         request.headers['User-Agent'] = ua
         # 不能有任何返回,如果返回,该请求又会返回给 <调度器> 了,要给 <下载器>

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
+from douban.items import DoubanItem
+
 
 class DoubanTop250Spider(scrapy.Spider):
     name = 'douban_top250'
@@ -21,17 +23,17 @@ class DoubanTop250Spider(scrapy.Spider):
 
         for item in data_list:
             dic = {}
-            ranking = item.xpath('.div[1]/em')  #//*[@id="content"]/div/div[1]/ol/li[1]/div/div[1]/em
-            print(ranking)
             detail_url = item.xpath('./div/a/@href').extract_first()
             image_url = item.xpath('./div/a/img/@src').extract_first()
             name = item.xpath('./div[2]/div[1]/a/span[1]/text()').extract_first()
             score  = item.xpath('./div[2]/div[2]/div/span[2]/text()').extract_first()
-            dic['name'] = name
+            ranking = item.xpath('./div[1]/em/text()').extract_first()
 
+            dic['name'] = name
             dic['image_url'] = image_url
             dic['score'] = score
             dic['url'] = detail_url
+            dic['ranking'] = ranking
             yield scrapy.Request(detail_url,callback=self.detail_parse,meta=dic)
 
 
@@ -43,6 +45,18 @@ class DoubanTop250Spider(scrapy.Spider):
     def detail_parse(self,response):
         # with open('detail.html',"w",encoding='utf8')as f:
         #     f.write(response.text)
-        detail = response.xpath('//*[@id="link-report"]/span/span/text()').extract_first().strip()
-        print(detail)
-        print(response.meta)
+        detail = response.xpath('//*[@id="link-report"]/span/text()').extract_first().strip()
+
+        data_dic = response.meta
+
+        item = DoubanItem()
+        item['name'] = data_dic.get('name')
+        item['url'] = data_dic.get('url')
+        item['image_url'] = data_dic.get('image_url')
+        item['score'] = data_dic.get('score')
+        item['desc'] = detail
+        item['ranking'] = data_dic.get('ranking')
+
+
+        #可以在这里调用pipeline进行保存
+        yield item

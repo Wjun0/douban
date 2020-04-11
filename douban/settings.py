@@ -74,8 +74,8 @@ PROXY_LIST = [
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    # 'douban.middlewares.DoubanDownloaderMiddleware': 543,
-   'douban.middlewares.RandomProxy': 543,
-   'douban.middlewares.RandomUserAgent': 542,
+   # 'douban.middlewares.RandomProxy': 543,
+   # 'douban.middlewares.RandomUserAgent': 542,
 
 }
 
@@ -87,9 +87,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'douban.pipelines.DoubanPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'douban.pipelines.DoubanPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
