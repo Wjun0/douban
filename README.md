@@ -1,5 +1,5 @@
-# douban
-scrapy for douban top250
+# douban</br>
+使用scrapy 爬取豆瓣top250  scrapy for douban top250 </br>
 1，使用scrapy 爬取豆瓣电影top250<br>
 2，连接mongodb 保存数据<br>
 3，配置了随机请求头<br>
